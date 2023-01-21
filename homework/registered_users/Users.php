@@ -13,6 +13,14 @@ class Users
 	public function getUsers() {
 		return $this->users;
 	}
+    public function getUser($index) {
+        try {
+            $user = $this->users[$index];
+            return $user;
+        } catch (Exception $e) {
+            echo "Index's out of range";
+        }
+	}
 	public function setUsers($users): self {
 		$this->users = $users;
 		return $this;
@@ -25,11 +33,33 @@ class Users
 		return $this;
 	}
     public function AddUser(User $user){
-        $this->users[] = $user;
+        if($this->checkLogin($user->GetLogin())){
+            echo "User with this login already exists!";
+        }else{
+            $this->users[] = $user;
+        }
+    }
+    public function RemoveUser($index){
+        try {
+            unset($this->users[$index]);
+        } catch (Exception $e) {
+            echo "Index's out of range";
+        }
     }
     public function __toString()
     {
-        return "{$this->name}";
+        $str = "{$this->name} ";
+        foreach ($this->users as $key => $user) {
+            $str .= "{$user->GetLogin()} ";
+        }
+        return $str;
+    }
+    private function CheckLogin($login){
+        foreach ($this->users as $key => $user) {
+            if ($user->GetLogin() == $login)
+                return true;
+        }
+        return false;
     }
     public function IsValid($login, $password){
         foreach ($this->users as $key => $user) {
@@ -44,8 +74,11 @@ $user1 = new User("s.sch20", "password");
 $user2 = new User("g.hch20", "password");
 $user3 = new User("fun20", "password");
 
-$users = new Users("PHP WEB", [$user, $user1, $user2, $user3]);
-echo $users;
+$users = new Users("PHP-WEB", [$user, $user1, $user2, $user3]);
+echo $users."\n";
 print $users->IsValid("b.sch20", "qwerty") ? "Correct" : "Incorrect";
 $users->AddUser(new User("omg2", "admin"));
+$users->RemoveUser(1);
+echo $users."\n";
+echo $users->getUser(0);
 
