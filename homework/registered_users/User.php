@@ -33,10 +33,10 @@ class User
     }
 }
 
-$user = new User("b.sch20", "password");
-echo $user . "\n";
-$user->SetPassword("qwerty");
-// if ($user->IsValid("b.sch20", "qwerty")){
-//     echo "\nUser profile is correct";
-// }
-print $user->IsValid("b.sch20", "qwerty") ? "Correct" : "Incorrect";
+// $user = new User("b.sch20", "password");
+// echo $user . "\n";
+// $user->SetPassword("qwerty");
+// // if ($user->IsValid("b.sch20", "qwerty")){
+// //     echo "\nUser profile is correct";
+// // }
+// print $user->IsValid("b.sch20", "qwerty") ? "Correct" : "Incorrect";
